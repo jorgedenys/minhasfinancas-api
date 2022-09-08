@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jdsjara.minhasfinancas.api.dto.UsuarioDTO;
+import com.jdsjara.minhasfinancas.exception.RegraNegocioException;
 import com.jdsjara.minhasfinancas.model.entity.Usuario;
 import com.jdsjara.minhasfinancas.service.LancamentoService;
 import com.jdsjara.minhasfinancas.service.UsuarioService;
@@ -47,7 +48,7 @@ public class UsuarioResource {
 		try {
 			Usuario usuarioSalvo = service.salvarUsuario(usuario);
 			return new ResponseEntity(usuarioSalvo, HttpStatus.CREATED);
-		} catch (Exception e) {
+		} catch (RegraNegocioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 		

@@ -48,13 +48,11 @@ public class UsuarioRepositoryTest {
 		
 	}
 	
-	@Test(expected = Test.None.class)
+	@Test
 	public void deveRetornarFalsoQuandoNaoHouverUsuarioCadastradoComOEmail() {
 		
-		// Cenário
-						
 		// Ação / Execução 
-		boolean result = repository.existsByEmail("usuario@email.com");
+		boolean result = repository.existsByEmail("email@email.com");
 					
 		// Verificação
 		Assertions.assertThat(result).isFalse();
@@ -75,25 +73,23 @@ public class UsuarioRepositoryTest {
 				
 	}
 	
+	@Test
 	public void deveBuscarUmUsuarioPorEmail() {
 		
 		// Cenário
-		Usuario usuario = criarUsuario();
-		entityManager.persist(usuario);
 		
 		// Verificação
-		Optional<Usuario> result = Optional.ofNullable(repository.findByEmail("usuario@email.com"));
+		Optional<Usuario> usuarioRetornado = Optional.ofNullable(repository.findByEmail("usuario@email.com"));
 		
-		Assertions.assertThat(result.isPresent()).isTrue();
+		Assertions.assertThat(usuarioRetornado.isPresent()).isTrue();
 				
 	}
 	
+	@Test
 	public void deveRetornarVazioAoBuscarUsuarioPorEmailQuandoNaoExisteNaBase() {
 		
-		// Cenário
-				
 		// Verificação
-		Optional<Usuario> result = Optional.ofNullable(repository.findByEmail("usuario@email.com"));
+		Optional<Usuario> result = Optional.ofNullable(repository.findByEmail("email@email.com"));
 		
 		Assertions.assertThat(result.isPresent()).isFalse();
 				

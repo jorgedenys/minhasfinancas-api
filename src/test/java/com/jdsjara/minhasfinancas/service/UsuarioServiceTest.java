@@ -45,12 +45,12 @@ public class UsuarioServiceTest {
 		
 	}
 	
-	@Test
+	@Test(expected = RegraNegocioException.class)
 	public void naoDeveSalvarUmUsuarioComEmailCadastrado() {
 		
 		// Cenário
-		String email = "email@email.com";
-		Usuario usuario = Usuario.builder().email("email@email.com").build();
+		String email = "usuario@email.com";
+		Usuario usuario = Usuario.builder().email("usuario@email.com").build();
 		Mockito.doThrow(RegraNegocioException.class).when(service).validarEmail(email);
 		
 		// Ação / Execução
@@ -63,6 +63,7 @@ public class UsuarioServiceTest {
 	
 	@Test(expected = Test.None.class)
 	public void deveAutenticarUmUsuarioComSucesso() {
+		
 		// Cenário
 		String email = "email@email.com";
 		String senha = "senha";
@@ -74,25 +75,30 @@ public class UsuarioServiceTest {
 		Usuario result = service.autenticar(email, senha);
 		
 		// Verificação
-		Assertions.assertThat(result).isNotNull();		
+		Assertions.assertThat(result).isNotNull();
+		
 	}
 	
 	@Test
 	public void deveValidarEmail() {
+		
 		// Cenário
 		Mockito.when(repository.existsByEmail(Mockito.anyString())).thenReturn(false);
 		
 		// Ação / Execução 
 		service.validarEmail("email@email.com");
+		
 	}
 	
-	@Test()
+	@Test(expected = RegraNegocioException.class)
 	public void deveLancarErroAoValidarEmailQuandoExistirEmailCadastrado() {
+		
 		// Cenário
 		Mockito.when(repository.existsByEmail(Mockito.anyString())).thenReturn(true);
 		
 		// Ação / Execução 
-		service.validarEmail("email@email.com");
+		service.validarEmail("usuario@email.com");
+		
 	}
 	
 }
