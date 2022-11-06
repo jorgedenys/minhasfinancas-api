@@ -29,8 +29,7 @@ public class UsuarioServiceTest {
 	
 		// Cenário
 		Mockito.doNothing().when(service).validarEmail(Mockito.anyString());
-		Usuario usuario = Usuario.builder().id(1L).nome("nome").email("email@email.com").senha("senha").build();
-		
+		Usuario usuario = Usuario.builder().id(1L).nome("nome").email("email@email.com").senha("senha").build();		
 		Mockito.when(repository.save(Mockito.any(Usuario.class))).thenReturn(usuario);
 		
 		// Ação / Execução
